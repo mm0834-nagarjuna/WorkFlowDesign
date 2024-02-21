@@ -1,0 +1,49 @@
+<mvc:View controllerName="project1.controller.WorkFlowView"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m">
+   <Page id="page" title="Work Flow Sheets" >
+
+        <headerContent>
+            <Button icon="sap-icon://add-employee" tooltip="Add Employee" press="onAddEmp" />
+        </headerContent>
+        <List
+            id="WorkFlowList"
+            class="sapUiResponsiveMargin"
+            width="auto"
+            growing="true"
+            growingThreshold="5"
+            items="{
+                path: 'WorkflowTemplete>/'
+            }">
+
+            <headerToolbar>
+                <Toolbar>
+                    <Label id="tableHeader" text="Work Flow List"/>
+                    <ToolbarSpacer />
+                    <SearchField id="searchField" width="auto" search="onSearchEmployee" />
+                </Toolbar>
+            </headerToolbar>
+            <items>
+                <ObjectListItem
+                    title="{WorkflowTemplete>workflowName}"
+                    type="Navigation"
+                    press="onSelect">
+                    <ObjectAttribute text="{WorkflowTemplete>workflowName}" />
+                </ObjectListItem>
+            </items>
+        </List>
+
+<footer>
+    <OverflowToolbar>
+        <Button id="messagePopoverBtn"
+            icon="{ path: '/', formatter: '.buttonIconFormatter' }"
+            type="{ path: '/', formatter: '.buttonTypeFormatter' }"
+            text="{ path: '/', formatter: '.highestSeverityMessages' }"
+            press=".handleMessagePopoverPress"
+            ariaHasPopup="Dialog"/>
+        <ToolbarSpacer/>
+    </OverflowToolbar>
+</footer>
+
+    </Page>
+</mvc:View>

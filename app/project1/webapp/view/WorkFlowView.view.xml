@@ -1,10 +1,12 @@
 <mvc:View controllerName="project1.controller.WorkFlowView"
     xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
-    xmlns="sap.m">
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    >
    <Page id="page" title="Work Flow Sheets" >
 
         <headerContent>
-            <Button icon="sap-icon://add-employee" tooltip="Add Employee" press="onAddEmp" />
+            <Button icon="sap-icon://add" tooltip="Add Employee" press="onNewWorkFlow" />
         </headerContent>
         <List
             id="WorkFlowList"
@@ -12,6 +14,8 @@
             width="auto"
             growing="true"
             growingThreshold="5"
+            mode="Delete"
+		    delete="handleDelete"
             items="{
                 path: 'WorkflowTemplete>/'
             }">
@@ -27,14 +31,16 @@
                 <ObjectListItem
                     title="{WorkflowTemplete>workflowName}"
                     type="Navigation"
-                    press="onSelect">
-                    <ObjectAttribute text="{WorkflowTemplete>workflowName}" />
+                    press="onSelect"
+                   
+                    >
+                    <ObjectAttribute text="{WorkflowTemplete>workflowDescription}" />
                 </ObjectListItem>
             </items>
         </List>
 
 <footer>
-    <OverflowToolbar>
+    <!-- <OverflowToolbar>
         <Button id="messagePopoverBtn"
             icon="{ path: '/', formatter: '.buttonIconFormatter' }"
             type="{ path: '/', formatter: '.buttonTypeFormatter' }"
@@ -42,7 +48,7 @@
             press=".handleMessagePopoverPress"
             ariaHasPopup="Dialog"/>
         <ToolbarSpacer/>
-    </OverflowToolbar>
+    </OverflowToolbar> -->
 </footer>
 
     </Page>

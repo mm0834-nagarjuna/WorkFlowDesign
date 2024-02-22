@@ -1,0 +1,31 @@
+<mvc:View
+		controllerName="project1.controller.WorkFlowGround"
+		xmlns="sap.suite.ui.commons.networkgraph"
+		xmlns:mvc="sap.ui.core.mvc"
+		height="100%">
+	<Graph id="graph"
+		   enableWheelZoom="true"
+           nodes="{/Nodes}"
+           lines="{/Lines}">
+		<nodes>
+		
+			<Node
+					key="{nodeKey}"
+					title="{nodeTitle}"
+					showActionLinksButton="false"
+					x="{nodePositionX}"
+					y="{nodePositionY}"
+					shape="Box">
+			</Node>
+		</nodes>
+		<lines>
+			<Line
+					from="{fromNodeKey}"
+					to="{toNodeKey}"
+            >
+					
+				
+			</Line>
+		</lines>
+	</Graph>
+</mvc:View>

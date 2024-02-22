@@ -137,6 +137,13 @@ sap.ui.define([
                         break;
                     }
                 }
+            },
+            onSelect: function(oEvent){
+                let workFlowName = oEvent.getSource().getTitle()
+                console.log(workFlowName);
+                const oRouter = this.getOwnerComponent().getRouter();
+                oRouter.navTo("WorkFlowGround", { workflowName: workFlowName });
             }
+
         });
     });

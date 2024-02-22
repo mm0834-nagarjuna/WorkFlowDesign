@@ -103,7 +103,15 @@
           "target": [
             "TargetWorkFlowView"
           ]
+        },
+        {
+          "name": "WorkFlowGround",
+          "pattern": "WorkFlowGround/{workflowName}",
+          "target": [
+            "TargetWorkFlowGround"
+          ]
         }
+
       ],
       "targets": {
         "TargetWorkFlowView": {
@@ -112,6 +120,13 @@
           "clearControlAggregation": false,
           "viewId": "WorkFlowView",
           "viewName": "WorkFlowView"
+        },
+        "TargetWorkFlowGround": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "WorkFlowGround",
+          "viewName": "WorkFlowGround"
         }
       }
     },

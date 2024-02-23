@@ -3,6 +3,7 @@
       id="createNode"
       title="Create Node" 
       class="sapUiPopupWithPadding"
+      afterClose="onCreateNodeAfterClose"
       >
       
       <VBox>
@@ -16,6 +17,15 @@
 
         <Label text="Node Description"></Label>
          <Input type="Text" value="{createNodeModel>/nodeDescription}"></Input>
+    
+         
+        <!-- <Label text="Node Position X"></Label>
+         <Input type="Number" value="{createNodeModel>/nodePositionX}"></Input>
+
+         
+        <Label text="Node Position Y"></Label>
+         <Input type="Number" value="{createNodeModel>/nodePositionY}"></Input> -->
+
 
          <Label text="Work FLow Name"></Label>
          <Input type="Text" value="{createNodeModel>/workFlowNameNode}" editable="false"></Input>

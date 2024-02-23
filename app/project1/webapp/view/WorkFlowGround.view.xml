@@ -17,12 +17,28 @@
                 x="{nodePositionX}"
                 y="{nodePositionY}"
                 shape="Box"
+                description="{nodeDescription}"
             >
                 <actionButtons>
+                  <ActionButton
+                        icon="sap-icon://chain-link"
+                        title="Create Line"
+                        press="onCreate_Line_fragment"
+                    />
                     <ActionButton
                         icon="sap-icon://add"
                         title="Add Node"
                         press="onAdd_Node_Btn"
+                    />
+                     <!-- <ActionButton
+                        icon="sap-icon://edit"
+                        title="Edit Node"
+                        press="onEdit_Node_Btn"
+                    /> -->
+                     <ActionButton
+                        icon="sap-icon://delete"
+                        title="Delete Node"
+                        press="onDelete_Node_Btn"
                     />
                 </actionButtons>
             </Node>
@@ -31,6 +47,7 @@
             <Line
                 from="{fromNodeKey}"
                 to="{toNodeKey}"
+                arrowPosition="Middle"
             />
         </lines>
     </Graph>

@@ -11,7 +11,7 @@ entity WorkflowTemplete {
 
 entity Nodes {
   key nodeKey          : String(10);
-  key workFlowNameNode : String(15);
+      workFlowNameNode : String(15);
       nodeTitle        : String(10);
       nodeDescription  : String(20);
       nodePositionX    : Integer;
@@ -23,7 +23,7 @@ entity Nodes {
 
 entity Lines {
   key lineKey          : UUID;
-  key workFlowNameLine : String(15);
+      workFlowNameLine : String(15);
       fromNodeKey      : String(10);
       toNodeKey        : String(10);
 

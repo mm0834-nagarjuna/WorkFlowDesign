@@ -1,0 +1,46 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+   <Dialog
+      id="editNode"
+      title="Edit Node" 
+      class="sapUiPopupWithPadding"
+      afterClose="onEditNodeAfterClose"
+      >
+      
+      <VBox>
+        <Label text="Node Key"></Label>
+        <Input type="Text" value="{editNodeModel>/nodeKey}" editable="false"></Input>
+
+        <Label text="Node Title"></Label>
+         <Input type="Text" value="{editNodeModel>/nodeTitle}"></Input>
+
+         
+
+        <Label text="Node Description"></Label>
+         <Input type="Text" value="{editNodeModel>/nodeDescription}"></Input>
+
+
+         <!-- <Label text="Node Position X"></Label>
+         <Input type="Text" value="{editNodeModel>/nodePositionX}"></Input>
+
+         
+        <Label text="Node Position Y"></Label>
+         <Input type="Text" value="{editNodeModel>/nodePositionY}"></Input> -->
+
+         <Label text="Work FLow Name"></Label>
+         <Input type="Text" value="{editNodeModel>/workFlowNameNode}" editable="false"></Input>
+
+
+         
+
+
+      </VBox>
+    
+      <beginButton>
+         <Button text="Edit" press="onEdit_Node" />
+      </beginButton>
+      
+      <endButton>
+         <Button text="Cancel" press="onEditCancle_Node" />
+      </endButton>
+   </Dialog>
+</core:FragmentDefinition>

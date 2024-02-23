@@ -1,0 +1,14 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+<SelectDialog
+        id="nodeHelp"
+        title="Departments" 
+        class="sapUiPopupWithPadding"
+        items="{/Nodes}"
+        search="_onValueHelpSearch"
+        confirm="_onValueHelpConfirmPress" 
+        >
+        <StandardListItem
+            title="{nodeKey}"
+            description="{nodeDescription}"/>
+    </SelectDialog>
+</core:FragmentDefinition>

@@ -1,0 +1,52 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <Dialog
+        id="createLine"
+        title="Create Line"
+        class="sapUiPopupWithPadding"
+        afterClose="onCreateLineAfterClose"
+    >
+        <VBox>
+            <Label text="From Node" />
+            <Input
+                id="fromNode"
+                type="Text"
+                value="{createLineModel>/fromNodeKey}"
+                showValueHelp="true"
+                valueHelpRequest="on_NodeHelpFrom"
+            />
+
+            <Label text="To Node" />
+            <Input
+                id="toNode"
+                type="Text"
+                value="{createLineModel>/toNodeKey}"
+                showValueHelp="true"
+                valueHelpRequest="on_NodeHelpTo"
+            />
+
+            <Label text="Work FLow Name" />
+            <Input
+                type="Text"
+                value="{createLineModel>/workFlowNameLine}"
+                editable="false"
+            />
+        </VBox>
+
+        <beginButton>
+            <Button
+                text="Create Line"
+                press="onCreate_Line"
+            />
+        </beginButton>
+
+        <endButton>
+            <Button
+                text="Cancel Line"
+                press="onCancle_Line"
+            />
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

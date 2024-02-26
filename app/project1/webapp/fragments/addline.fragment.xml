@@ -9,13 +9,19 @@
         afterClose="onCreateLineAfterClose"
     >
         <VBox>
+         <Label text="Line Key" />
+            <Input
+                id="LineId"
+                type="Text"
+                value="{createLineModel>/lineKey}"
+                editable="false"
+            />
             <Label text="From Node" />
             <Input
                 id="fromNode"
                 type="Text"
                 value="{createLineModel>/fromNodeKey}"
-                showValueHelp="true"
-                valueHelpRequest="on_NodeHelpFrom"
+                editable="false"
             />
 
             <Label text="To Node" />

@@ -1,7 +1,7 @@
 namespace my.workflow;
 
 entity WorkflowTemplete {
-  key workflowName        : String(15);
+  key workflowName        : String(20);
       workflowDescription : String(30);
       Nodes               : Composition of many Nodes
                               on Nodes.workFlowNameNode = $self.workflowName;
@@ -14,15 +14,15 @@ entity Nodes {
       workFlowNameNode : String(15);
       nodeTitle        : String(10);
       nodeDescription  : String(20);
-      nodePositionX    : Integer;
-      nodePositionY    : Integer;
+ 
 
       workflowName     : Association to WorkflowTemplete
                            on workflowName.workflowName = $self.workFlowNameNode;
+      lines            : Composition of many Lines;
 }
 
 entity Lines {
-  key lineKey          : UUID;
+  key lineKey          : String(5);
       workFlowNameLine : String(15);
       fromNodeKey      : String(10);
       toNodeKey        : String(10);
@@ -38,5 +38,5 @@ entity Decision {
         Reject;
         Revert
       };
-      lineKey  : UUID;
+      lineKey  : String(5);
 }

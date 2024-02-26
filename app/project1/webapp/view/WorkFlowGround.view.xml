@@ -14,41 +14,59 @@
             <Node
                 key="{nodeKey}"
                 title="{nodeTitle}"
-                x="{nodePositionX}"
-                y="{nodePositionY}"
                 shape="Box"
                 description="{nodeDescription}"
+                press="nodePress"
+                
             >
                 <actionButtons>
-                  <ActionButton
+                    <ActionButton
                         icon="sap-icon://chain-link"
                         title="Create Line"
                         press="onCreate_Line_fragment"
+                    />
+                    <ActionButton
+                        icon="sap-icon://decision"
+                        title=" Take Decision"
+                        press="onDecision_Node_Btn"
                     />
                     <ActionButton
                         icon="sap-icon://add"
                         title="Add Node"
                         press="onAdd_Node_Btn"
                     />
-                     <!-- <ActionButton
+                    <ActionButton
                         icon="sap-icon://edit"
                         title="Edit Node"
                         press="onEdit_Node_Btn"
-                    /> -->
-                     <ActionButton
+                    />
+                    <ActionButton
                         icon="sap-icon://delete"
                         title="Delete Node"
                         press="onDelete_Node_Btn"
                     />
+
                 </actionButtons>
             </Node>
         </nodes>
         <lines>
             <Line
+            title="{lineKey}"
                 from="{fromNodeKey}"
                 to="{toNodeKey}"
                 arrowPosition="Middle"
-            />
+                selected="true"
+                press="linePress"
+            >
+                <actionButtons>
+                    
+                    <ActionButton
+                        icon="sap-icon://delete"
+                        title="Delete Line"
+                        press="onDelete_Line_Btn"
+                    />
+                </actionButtons>
+            </Line>
         </lines>
     </Graph>
 </mvc:View>

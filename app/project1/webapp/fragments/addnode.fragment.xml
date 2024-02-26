@@ -8,7 +8,7 @@
       
       <VBox>
         <Label text="Node Key"></Label>
-        <Input type="Text" value="{createNodeModel>/nodeKey}"></Input>
+        <Input type="Text" value="{createNodeModel>/nodeKey}" editable="false"></Input>
 
         <Label text="Node Title"></Label>
          <Input type="Text" value="{createNodeModel>/nodeTitle}"></Input>

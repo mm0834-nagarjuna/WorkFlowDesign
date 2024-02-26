@@ -9,6 +9,6 @@
         >
         <StandardListItem
             title="{nodeKey}"
-            description="{nodeDescription}"/>
+            description="{nodeTitle}"/>
     </SelectDialog>
 </core:FragmentDefinition>

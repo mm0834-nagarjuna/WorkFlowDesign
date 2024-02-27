@@ -18,7 +18,7 @@ entity Nodes {
 
       workflowName     : Association to WorkflowTemplete
                            on workflowName.workflowName = $self.workFlowNameNode;
-      lines            : Composition of many Lines;
+      Decision            : Composition of many Decision on Decision.Decision= $self.nodeTitle;
 }
 
 entity Lines {
@@ -32,11 +32,11 @@ entity Lines {
 }
 
 entity Decision {
-  key nodeKey  : String(10);
+  key from_NodeKey  : String(10);
   key Decision : String enum {
         Accept;
         Reject;
         Revert
       };
-      lineKey  : String(5);
+      to_NodeKey  : String(10);
 }

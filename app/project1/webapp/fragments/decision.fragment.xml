@@ -8,17 +8,17 @@
         class="sapUiPopupWithPadding"
     >
         <VBox>
-            <Label text="Node Key" />
+            <Label text="Source Node Key" />
             <Input
                 type="Text"
-                value="{createDecisionModel>/nodeKey}"
+                value="{createDecisionModel>/from_NodeKey}"
                 editable="false"
             />
 
             <Label text="Select Decision" />
 
             <ComboBox 
-          
+            
             id="decisionComboBox"
             value="{createDecisionModel>/Decision}"
              >
@@ -35,18 +35,23 @@
                     text="Revert"
                 />
             </ComboBox>
-            <Label text="Line Key" />
-            <Input
-                type="Text"
-                value="{createDecisionModel>/lineKey}"
-                editable="false"
-            />
+
+            <Label text=" Target Node Key" />
+            <ComboBox 
+            showSecondaryValues="true"
+            id="lineComboBox"
+            value="{createDecisionModel>/to_NodeKey}"
+             >
+                
+                
+            </ComboBox>
         </VBox>
 
         <beginButton>
             <Button
                 text="Create"
                 press="onCreate_Decision"
+                
             />
         </beginButton>
 

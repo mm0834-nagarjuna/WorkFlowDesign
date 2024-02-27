@@ -5,7 +5,7 @@ sap.ui.define([
     "sap/ui/core/Fragment",
     "sap/m/Label",
     "sap/m/MessageBox",
-    "sap/m/MessageToast"
+    "sap/m/MessageToast",
 ], function (Controller, JSONModel, Button, Fragment, Label, MessageBox, MessageToast) {
     let NodeKey, LineKey
     return Controller.extend("project1.controller.WorkFlowGround", {
@@ -28,9 +28,9 @@ sap.ui.define([
             })
 
             let DecisionModel = new JSONModel({
-                 "nodeKey": "",
-                 "Decision": "",
-                "lineKey": ""
+                "from_NodeKey": "",
+                "Decision": "",
+                "to_NodeKey": ""
             })
             this.getView().setModel(workflowdesignModel)
             this.getView().setModel(NodeModel, 'createNodeModel')
@@ -211,6 +211,16 @@ sap.ui.define([
             console.log(Node_Key);
 
             let childLines = oEvent.getSource().getParent().getChildLines();
+            let parentLines = oEvent.getSource().getParent().getParentLines()
+            console.log(parentLines);
+
+            parentLines.forEach((line) => {
+
+                let lineKey = line.getTitle()
+                console.log(lineKey);
+                this.CRUD_OF_LINE('DELETE', null, lineKey)
+                console.log('this line deleted' + line.getTitle());
+            })
 
             childLines.forEach((line) => {
 
@@ -251,7 +261,7 @@ sap.ui.define([
             let Node_Key = oEvent.getSource().getParent().getKey()
 
             this.getView().getModel('createLineModel').setProperty('/fromNodeKey', Node_Key)
-            
+
 
             this.getView().getModel('createLineModel').setProperty('/lineKey', `${this.generateUUID()}`)
         },
@@ -340,23 +350,20 @@ sap.ui.define([
 
 
 
-        onDecision_Node_Btn:function(oEvent){
+        onDecision_Node_Btn: function (oEvent) {
             let Node_Key = oEvent.getSource().getParent().getKey()
 
-            this.getView().getModel('createDecisionModel').setProperty('/nodeKey', Node_Key)
+            this.getView().getModel('createDecisionModel').setProperty('/from_NodeKey', Node_Key)
 
-            let childLines = oEvent.getSource().getParent().getChildLines();
-
-            if(childLines.length > 0){
-              childLines.forEach((line) => {
-                  let lineKey = line.getTitle()
-                  console.log('this line  ' + line.getTitle());
-              })
-            } else {
-              console.log('please create a line')
-              return;
+            let nodes = this.byId('graph').getNodes()
+            let nodesArray = []
+            if (nodes.length > 0) {
+                nodes.forEach((node) => {
+                    nodesArray.push(node.getBindingContext().getObject())
+                })
             }
- 
+            console.log(nodesArray);
+
             if (!this.on_DecisionDialog) {
                 this.on_DecisionDialog = Fragment.load({
                     id: this.getView().getId(),
@@ -368,17 +375,83 @@ sap.ui.define([
                 }.bind(this));
             }
             this.on_DecisionDialog.then((oDialog) => {
+
+
+                const oComboBox = this.byId('lineComboBox');
+                oComboBox.setModel(new JSONModel(nodesArray));
+                oComboBox.bindAggregation("items", {
+                    path: "/",
+                    template: new sap.ui.core.ListItem({
+                        key: "{nodeKey}",
+                        text: "{nodeKey}",
+                        additionalText: "{nodeTitle}"
+                    })
+                });
+
+
                 oDialog.open()
             });
         },
-        
-        onCreate_Decision:function(){
-            console.log( this.getView().getModel('createDecisionModel').getData());
+
+        onCreate_Decision: function () {
+            let decisionData = this.getView().getModel('createDecisionModel').getData();
+            let that = this;
+
+            let decisionNode = {
+                "nodeKey": `${that.generateUUID()}`,
+                "nodeTitle": decisionData.Decision,
+                "workFlowNameNode": that.WorkFlowName
+            };
+
+            let decisionConnectorLine = {
+                "workFlowNameLine": that.WorkFlowName,
+                "fromNodeKey": decisionData.from_NodeKey,
+                "toNodeKey": decisionNode.nodeKey,
+                "lineKey": `${that.generateUUID()}`
+            };
+
+            let nodeConnectorLine = {
+                "workFlowNameLine": that.WorkFlowName,
+                "fromNodeKey": decisionNode.nodeKey,
+                "toNodeKey": decisionData.to_NodeKey,
+                "lineKey": `${that.generateUUID()}`
+            };
+
+
+
+            console.log('Decision Data ->', decisionData);
+            console.log('New Decision Node ->', decisionNode);
+            console.log('New Line ->', decisionConnectorLine);
+            console.log('New dec to node  Line ->', nodeConnectorLine);
+
+
+
+            $.ajax({
+                url: this.getOwnerComponent().getModel('workflowdesign').getServiceUrl() + 'Decision',
+                method: "POST",
+                contentType: 'application/json',
+                data: JSON.stringify(decisionData),
+                success: function () {
+                    that.CRUD_Of_Node('POST', null, decisionNode)
+                    that.CRUD_OF_LINE("POST", decisionConnectorLine)
+                    that.CRUD_OF_LINE("POST", nodeConnectorLine)
+                    MessageToast.show('Decision Created')
+
+                    that.getView().getModel('createDecisionModel').setData({
+                        "from_NodeKey": "",
+                        "Decision": "",
+                        "to_NodeKey": ""
+                    })
+                },
+                error: function (Error) {
+                    MessageBox.error(Error.responseJSON.error.message)
+                }
+            })
+            this.onCancle_Decision();
         },
-
-      
-
-
+        onCancle_Decision: function () {
+            this.byId('createDecision').close();
+        },
 
 
         CRUD_Of_Node: function (method, Node_Key, data) {
@@ -430,6 +503,11 @@ sap.ui.define([
 
                         }
                     })
+                    break;
+                }
+
+                case 'newNodePost': {
+                    console.log(data);
                     break;
                 }
 

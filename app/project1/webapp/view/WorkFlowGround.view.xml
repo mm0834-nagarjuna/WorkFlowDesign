@@ -6,7 +6,7 @@
 >
     <Graph
         id="graph"
-        enableWheelZoom="true"
+        enableWheelZoom="false"
         nodes="{/Nodes}"
         lines="{/Lines}"
     >

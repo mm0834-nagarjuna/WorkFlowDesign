@@ -47,7 +47,6 @@ sap.ui.define([
         _onObjectMatched: function (oEvent) {
             this.WorkFlowName = oEvent.getParameter('arguments').workflowName;
 
-
             this.Fetch_Work_Flow_Ground()
 
             this.createToolbar()

@@ -6,7 +6,7 @@
    <Page id="page" title="Work Flow Sheets" >
 
         <headerContent>
-            <Button icon="sap-icon://add" tooltip="Add Employee" press="onNewWorkFlow" />
+            <Button icon="sap-icon://add" tooltip="Add Work Flow" press="onNewWorkFlow" />
         </headerContent>
         <List
             id="WorkFlowList"
@@ -24,7 +24,7 @@
                 <Toolbar>
                     <Label id="tableHeader" text="Work Flow List"/>
                     <ToolbarSpacer />
-                    <SearchField id="searchField" width="auto" search="onSearchEmployee" />
+                    <SearchField id="searchField" width="auto" search="onSearchWorkFlow" />
                 </Toolbar>
             </headerToolbar>
             <items>
@@ -39,17 +39,6 @@
             </items>
         </List>
 
-<footer>
-    <!-- <OverflowToolbar>
-        <Button id="messagePopoverBtn"
-            icon="{ path: '/', formatter: '.buttonIconFormatter' }"
-            type="{ path: '/', formatter: '.buttonTypeFormatter' }"
-            text="{ path: '/', formatter: '.highestSeverityMessages' }"
-            press=".handleMessagePopoverPress"
-            ariaHasPopup="Dialog"/>
-        <ToolbarSpacer/>
-    </OverflowToolbar> -->
-</footer>
 
     </Page>
 </mvc:View>

@@ -1,12 +1,14 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
-    "sap/ui/core/Fragment"
+    "sap/ui/core/Fragment",
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator",
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, JSONModel, Fragment) {
+    function (Controller, JSONModel, Fragment, Filter, FilterOperator) {
         "use strict";
 
         return Controller.extend("project1.controller.WorkFlowView", {
@@ -138,11 +140,27 @@ sap.ui.define([
                     }
                 }
             },
-            onSelect: function(oEvent){
+            onSelect: function (oEvent) {
                 let workFlowName = oEvent.getSource().getTitle()
                 console.log(workFlowName);
                 const oRouter = this.getOwnerComponent().getRouter();
                 oRouter.navTo("WorkFlowGround", { workflowName: workFlowName });
+            },
+            onSearchWorkFlow: function (oEvent) {
+                const aFilter = [];
+                const sQuery = oEvent.getParameter("query");
+                if (sQuery) {
+
+                    const oWorkFlowFilter = new Filter(
+                        "workflowName", FilterOperator.Contains, sQuery
+                    );
+                    aFilter.push(oWorkFlowFilter);
+                }
+
+                const oList = this.byId("WorkFlowList");
+                const oBinding = oList.getBinding("items");
+                oBinding.filter(aFilter);
+
             }
 
         });

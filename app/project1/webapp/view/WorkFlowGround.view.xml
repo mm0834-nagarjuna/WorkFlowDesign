@@ -17,7 +17,6 @@
                 shape="Box"
                 description="{nodeDescription}"
                 press="nodePress"
-                
             >
                 <actionButtons>
                     <ActionButton
@@ -45,13 +44,12 @@
                         title="Delete Node"
                         press="onDelete_Node_Btn"
                     />
-
                 </actionButtons>
             </Node>
         </nodes>
         <lines>
             <Line
-            title="{lineKey}"
+                title="{lineKey}"
                 from="{fromNodeKey}"
                 to="{toNodeKey}"
                 arrowPosition="Middle"
@@ -59,7 +57,6 @@
                 press="linePress"
             >
                 <actionButtons>
-                    
                     <ActionButton
                         icon="sap-icon://delete"
                         title="Delete Line"

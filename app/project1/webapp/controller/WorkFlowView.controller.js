@@ -4,11 +4,13 @@ sap.ui.define([
     "sap/ui/core/Fragment",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
+    "sap/m/MessageBox",
+    "sap/m/MessageToast",
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, JSONModel, Fragment, Filter, FilterOperator) {
+    function (Controller, JSONModel, Fragment, Filter, FilterOperator, MessageBox,MessageToast) {
         "use strict";
 
         return Controller.extend("project1.controller.WorkFlowView", {
@@ -53,6 +55,7 @@ sap.ui.define([
 
                 } else {
                     console.log("please provide some data");
+
                 }
 
             },
@@ -82,9 +85,11 @@ sap.ui.define([
                                 console.log(data.value)
                                 that.getView().getModel('WorkflowTemplete').setData(data.value)
                                 console.log(that.getView().getModel('WorkflowTemplete').getData());
+                                
                             },
                             error: function (error) {
-                                console.log(error); //need to add the error Message
+                               
+                                MessageBox.error(error.responseJSON.error.message)
                             }
                         })
                         break;
@@ -105,9 +110,11 @@ sap.ui.define([
                                     workflowName: "",
                                     workflowDescription: ""
                                 })
+
+                                MessageToast.show('Work Flow Created')
                             },
                             error: function (error) {
-                                console.log("error", error)  //need to add the error Message
+                                MessageBox.error(error.responseJSON.error.message)
                             }
 
                         })
@@ -126,16 +133,18 @@ sap.ui.define([
                                 console.log('Data Deleted');
 
                                 that.CRUD_OF_WorkFlowTemplete('GET')
+
+                                MessageToast.show('Work Flow Deleted ')
                             },
                             error: function (error) {
-                                console.log(error)   //need to add the error Message
+                                MessageBox.error(error.responseJSON.error.message)
                             }
                         })
 
                         break;
                     }
                     default: {
-                        console.log('default')  //need to add the error Message
+                        console.log('default') 
                         break;
                     }
                 }
@@ -161,7 +170,9 @@ sap.ui.define([
                 const oBinding = oList.getBinding("items");
                 oBinding.filter(aFilter);
 
-            }
+            },
+
+           
 
         });
     });

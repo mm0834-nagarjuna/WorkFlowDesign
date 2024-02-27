@@ -35,6 +35,7 @@
                    
                     >
                     <ObjectAttribute text="{WorkflowTemplete>workflowDescription}" />
+                   
                 </ObjectListItem>
             </items>
         </List>

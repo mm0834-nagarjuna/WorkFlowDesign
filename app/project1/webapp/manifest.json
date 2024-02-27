@@ -116,14 +116,14 @@
       "targets": {
         "TargetWorkFlowView": {
           "viewType": "XML",
-          "transition": "slide",
+          "transition": "fade",
           "clearControlAggregation": false,
           "viewId": "WorkFlowView",
           "viewName": "WorkFlowView"
         },
         "TargetWorkFlowGround": {
           "viewType": "XML",
-          "transition": "slide",
+          "transition": "fade",
           "clearControlAggregation": false,
           "viewId": "WorkFlowGround",
           "viewName": "WorkFlowGround"

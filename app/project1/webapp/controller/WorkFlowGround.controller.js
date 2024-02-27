@@ -32,15 +32,13 @@ sap.ui.define([
                 "Decision": "",
                 "to_NodeKey": ""
             })
+
             this.getView().setModel(workflowdesignModel)
             this.getView().setModel(NodeModel, 'createNodeModel')
             this.getView().setModel(NodeModel, 'editNodeModel')
             this.getView().setModel(LineModel, 'createLineModel')
             this.getView().setModel(LineModel, 'editLineModel')
             this.getView().setModel(DecisionModel, "createDecisionModel")
-
-
-
 
             let oRouter = this.getOwnerComponent().getRouter();
             oRouter.getRoute('WorkFlowGround').attachPatternMatched(this._onObjectMatched, this)
@@ -52,10 +50,7 @@ sap.ui.define([
 
             this.Fetch_Work_Flow_Ground()
 
-
-
             this.createToolbar()
-
 
             MessageToast.show(`${this.WorkFlowName} is opened`)
 
@@ -75,16 +70,25 @@ sap.ui.define([
             oToolbar.insertContent(new Button("addButton", {
                 icon: "sap-icon://add",
                 press: this.addNode.bind(this)
-            }), 2);
+            }), 1);
 
 
+            oToolbar.insertContent(new Button("backButton", {
+                icon: "sap-icon://nav-back",
+                press: this.navBack.bind(this)
+            }), -1);
+
+        },
+
+        navBack:function(oEvent){
+            let oRouter = this.getOwnerComponent().getRouter();
+            oRouter.navTo("RouteWorkFlowView");
         },
 
 
         Fetch_Work_Flow_Ground: function () {
 
             let WorkFlowName = this.WorkFlowName
-
 
             let url = `${this.getOwnerComponent().getModel('workflowdesign').getServiceUrl()}WorkflowTemplete('${WorkFlowName}')?$expand=Nodes,Lines`;
             console.log(url);
@@ -118,7 +122,6 @@ sap.ui.define([
 
 
         addNode: function () {
-
 
             if (!this.NodeDialog) {
                 this.NodeDialog = Fragment.load({
@@ -158,8 +161,6 @@ sap.ui.define([
         onAdd_Node_Btn: function () {
             this.addNode()
         },
-
-
 
 
         onEdit_Node_Btn: function (oEvent) {
@@ -236,8 +237,6 @@ sap.ui.define([
             } else {
                 MessageBox.warning('Please Provide Node Key')
             }
-
-
         },
 
 
@@ -262,7 +261,6 @@ sap.ui.define([
 
             this.getView().getModel('createLineModel').setProperty('/fromNodeKey', Node_Key)
 
-
             this.getView().getModel('createLineModel').setProperty('/lineKey', `${this.generateUUID()}`)
         },
 
@@ -274,8 +272,6 @@ sap.ui.define([
         on_NodeHelpTo: function () {
             this.on_NodeHelp('toNode');
         },
-
-
 
         on_NodeHelp: function (sCurrentNOde) {
 
@@ -347,7 +343,6 @@ sap.ui.define([
             }
 
         },
-
 
 
         onDecision_Node_Btn: function (oEvent) {
@@ -633,8 +628,6 @@ sap.ui.define([
                 }
             }
         },
-
-
 
         generateUUID: function () {
             return Math.floor(1000 + Math.random() * 9000);

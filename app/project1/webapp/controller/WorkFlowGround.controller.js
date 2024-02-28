@@ -43,6 +43,8 @@ sap.ui.define([
             let oRouter = this.getOwnerComponent().getRouter();
             oRouter.getRoute('WorkFlowGround').attachPatternMatched(this._onObjectMatched, this)
 
+            
+
         },
         _onObjectMatched: function (oEvent) {
             this.WorkFlowName = oEvent.getParameter('arguments').workflowName;
@@ -53,7 +55,10 @@ sap.ui.define([
 
             MessageToast.show(`${this.WorkFlowName} is opened`)
 
+
         },
+
+       
 
 
         createToolbar: function () {
@@ -77,16 +82,17 @@ sap.ui.define([
                 press: this.navBack.bind(this)
             }), -1);
 
+
         },
 
-        navBack:function(oEvent){
+        navBack: function (oEvent) {
             let oRouter = this.getOwnerComponent().getRouter();
             oRouter.navTo("RouteWorkFlowView");
         },
 
 
         Fetch_Work_Flow_Ground: function () {
-           
+
 
             let WorkFlowName = this.WorkFlowName
 
@@ -428,8 +434,8 @@ sap.ui.define([
                 data: JSON.stringify(decisionData),
                 success: function () {
                     that.CRUD_Of_Node('POST', null, decisionNode)
-                    that.CRUD_OF_LINE("POST", decisionConnectorLine)
-                    that.CRUD_OF_LINE("POST", nodeConnectorLine)
+                    that.CRUD_OF_LINE("POST", decisionConnectorLine, null)
+                    that.CRUD_OF_LINE("POST", nodeConnectorLine, null)
                     MessageToast.show('Decision Created')
 
                     that.getView().getModel('createDecisionModel').setData({
@@ -485,7 +491,6 @@ sap.ui.define([
                                 "nodeKey": "",
                                 "nodeTitle": "",
                                 "nodeDescription": "",
-
                                 "workFlowNameNode": ""
                             })
 
@@ -493,9 +498,7 @@ sap.ui.define([
 
                         },
                         error: function (error) {
-
                             MessageBox.error(error.responseJSON.error.message)
-
                         }
                     })
                     break;
@@ -631,6 +634,7 @@ sap.ui.define([
 
         generateUUID: function () {
             return Math.floor(1000 + Math.random() * 9000);
+           
         }
 
     });

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+<edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+<edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+</edmx:Reference>
+<edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+<edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+</edmx:Reference>
+<edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Validation.V1.xml">
+<edmx:Include Alias="Validation" Namespace="Org.OData.Validation.V1"/>
+</edmx:Reference>
+<edmx:DataServices>
+<Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="CatalogService">
+<EntityContainer Name="EntityContainer">
+<EntitySet Name="WorkflowTemplete" EntityType="CatalogService.WorkflowTemplete">
+<NavigationPropertyBinding Path="Nodes" Target="Nodes"/>
+<NavigationPropertyBinding Path="Lines" Target="Lines"/>
+</EntitySet>
+<EntitySet Name="Nodes" EntityType="CatalogService.Nodes">
+<NavigationPropertyBinding Path="workflowName" Target="WorkflowTemplete"/>
+<NavigationPropertyBinding Path="Decision" Target="Decision"/>
+</EntitySet>
+<EntitySet Name="Lines" EntityType="CatalogService.Lines">
+<NavigationPropertyBinding Path="workflowName" Target="WorkflowTemplete"/>
+</EntitySet>
+<EntitySet Name="Decision" EntityType="CatalogService.Decision"/>
+</EntityContainer>
+<EntityType Name="WorkflowTemplete">
+<Key>
+<PropertyRef Name="workflowName"/>
+</Key>
+<Property Name="workflowName" Type="Edm.String" MaxLength="20" Nullable="false"/>
+<Property Name="workflowDescription" Type="Edm.String" MaxLength="30"/>
+<NavigationProperty Name="Nodes" Type="Collection(CatalogService.Nodes)">
+<OnDelete Action="Cascade"/>
+</NavigationProperty>
+<NavigationProperty Name="Lines" Type="Collection(CatalogService.Lines)">
+<OnDelete Action="Cascade"/>
+</NavigationProperty>
+</EntityType>
+<EntityType Name="Nodes">
+<Key>
+<PropertyRef Name="nodeKey"/>
+</Key>
+<Property Name="nodeKey" Type="Edm.String" MaxLength="10" Nullable="false"/>
+<Property Name="workFlowNameNode" Type="Edm.String" MaxLength="15"/>
+<Property Name="nodeTitle" Type="Edm.String" MaxLength="10"/>
+<Property Name="nodeDescription" Type="Edm.String" MaxLength="20"/>
+<NavigationProperty Name="workflowName" Type="CatalogService.WorkflowTemplete">
+<ReferentialConstraint Property="workFlowNameNode" ReferencedProperty="workflowName"/>
+</NavigationProperty>
+<NavigationProperty Name="Decision" Type="Collection(CatalogService.Decision)">
+<OnDelete Action="Cascade"/>
+</NavigationProperty>
+</EntityType>
+<EntityType Name="Lines">
+<Key>
+<PropertyRef Name="lineKey"/>
+</Key>
+<Property Name="lineKey" Type="Edm.String" MaxLength="5" Nullable="false"/>
+<Property Name="workFlowNameLine" Type="Edm.String" MaxLength="15"/>
+<Property Name="fromNodeKey" Type="Edm.String" MaxLength="10"/>
+<Property Name="toNodeKey" Type="Edm.String" MaxLength="10"/>
+<NavigationProperty Name="workflowName" Type="CatalogService.WorkflowTemplete">
+<ReferentialConstraint Property="workFlowNameLine" ReferencedProperty="workflowName"/>
+</NavigationProperty>
+</EntityType>
+<EntityType Name="Decision">
+<Key>
+<PropertyRef Name="from_NodeKey"/>
+<PropertyRef Name="Decision"/>
+</Key>
+<Property Name="from_NodeKey" Type="Edm.String" MaxLength="10" Nullable="false"/>
+<Property Name="Decision" Type="Edm.String" Nullable="false"/>
+<Property Name="to_NodeKey" Type="Edm.String" MaxLength="10"/>
+</EntityType>
+<Annotations Target="CatalogService.Decision/Decision">
+<Annotation Term="Validation.AllowedValues">
+<Collection>
+<Record Type="Validation.AllowedValue">
+<Annotation Term="Core.SymbolicName" String="Accept"/>
+<PropertyValue Property="Value" String="Accept"/>
+</Record>
+<Record Type="Validation.AllowedValue">
+<Annotation Term="Core.SymbolicName" String="Reject"/>
+<PropertyValue Property="Value" String="Reject"/>
+</Record>
+<Record Type="Validation.AllowedValue">
+<Annotation Term="Core.SymbolicName" String="Revert"/>
+<PropertyValue Property="Value" String="Revert"/>
+</Record>
+</Collection>
+</Annotation>
+</Annotations>
+</Schema>
+</edmx:DataServices>
+</edmx:Edmx>

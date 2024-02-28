@@ -1,12 +1,25 @@
-<mvc:View controllerName="project1.controller.WorkFlowView"
-    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+<mvc:View
+    controllerName="project1.controller.WorkFlowView"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
     xmlns="sap.m"
     xmlns:core="sap.ui.core"
+>
+    <Page
+        id="page"
+        title="Work Flow Sheets"
     >
-   <Page id="page" title="Work Flow Sheets" >
-
         <headerContent>
-            <Button icon="sap-icon://add" tooltip="Add Work Flow" press="onNewWorkFlow" />
+            <Button
+                icon="sap-icon://add"
+                tooltip="Add Work Flow"
+                press="onNewWorkFlow"
+            />
+             <Button
+                icon="sap-icon://refresh"
+                tooltip="Refresh"
+                press="onPageRefresh"
+            />
         </headerContent>
         <List
             id="WorkFlowList"
@@ -15,31 +28,39 @@
             growing="true"
             growingThreshold="5"
             mode="Delete"
-		    delete="handleDelete"
+            delete="handleDelete"
             items="{
-                path: 'WorkflowTemplete>/'
-            }">
-
+                path: 'workflowdesign>/WorkflowTemplete',	
+                parameters: {
+					$count: true
+				}
+            }"
+        >
             <headerToolbar>
                 <Toolbar>
-                    <Label id="tableHeader" text="Work Flow List"/>
+                    <Label
+                        id="tableHeader"
+                        text="Work Flow List ({workflowdesign>/WorkflowTemplete/$count})"
+                    />
                     <ToolbarSpacer />
-                    <SearchField id="searchField" width="auto" search="onSearchWorkFlow" />
+                    <SearchField
+                        id="searchField"
+                        width="auto"
+                        search="onSearchWorkFlow"
+                    />
                 </Toolbar>
             </headerToolbar>
             <items>
                 <ObjectListItem
-                    title="{WorkflowTemplete>workflowName}"
+                    title="{workflowdesign>workflowName}"
                     type="Navigation"
                     press="onSelect"
-                   
-                    >
-                    <ObjectAttribute text="{WorkflowTemplete>workflowDescription}" />
-                   
+                >
+                    <ObjectAttribute
+                        text="{workflowdesign>workflowDescription}"
+                    />
                 </ObjectListItem>
             </items>
         </List>
-
-
     </Page>
 </mvc:View>

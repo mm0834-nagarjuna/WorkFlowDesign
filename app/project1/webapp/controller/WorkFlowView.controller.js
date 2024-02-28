@@ -20,11 +20,8 @@ sap.ui.define([
                     workflowDescription: ""
                 })
 
-                let oModel = new JSONModel()
-                this.getView().setModel(oModel, 'WorkflowTemplete')
                 this.getView().setModel(newWorkFlowModel, "newWorkFlow")
 
-                this.CRUD_OF_WorkFlowTemplete('GET')
 
             },
             onNewWorkFlow: function () {
@@ -52,6 +49,7 @@ sap.ui.define([
 
                     this.CRUD_OF_WorkFlowTemplete('POST', newWorkFlowData)
                     this.onCancle_WorkFlow()
+                    
 
                 } else {
                     console.log("please provide some data");
@@ -76,24 +74,6 @@ sap.ui.define([
                 let that = this
 
                 switch (method) {
-                    case "GET": {
-                        console.log('GET');
-                        $.ajax({
-                            url: this.getOwnerComponent().getModel('workflowdesign').getServiceUrl() + 'WorkflowTemplete',
-                            method: "GET",
-                            success: function (data) {
-                                console.log(data.value)
-                                that.getView().getModel('WorkflowTemplete').setData(data.value)
-                                console.log(that.getView().getModel('WorkflowTemplete').getData());
-                                
-                            },
-                            error: function (error) {
-                               
-                                MessageBox.error(error.responseJSON.error.message)
-                            }
-                        })
-                        break;
-                    }
                     case "POST": {
                         console.log('POST');
                         $.ajax({
@@ -110,6 +90,8 @@ sap.ui.define([
                                     workflowName: "",
                                     workflowDescription: ""
                                 })
+
+                                that.onPageRefresh()
 
                                 MessageToast.show('Work Flow Created')
                             },
@@ -133,6 +115,8 @@ sap.ui.define([
                                 console.log('Data Deleted');
 
                                 that.CRUD_OF_WorkFlowTemplete('GET')
+
+                                that.onPageRefresh()
 
                                 MessageToast.show('Work Flow Deleted ')
                             },
@@ -171,8 +155,10 @@ sap.ui.define([
                 oBinding.filter(aFilter);
 
             },
-
-           
-
+            onPageRefresh:function(){
+                let oBind = this.byId('WorkFlowList').getBinding('items')
+                oBind.refresh()
+                MessageToast.show('Data Refreshed')
+            }
         });
     });

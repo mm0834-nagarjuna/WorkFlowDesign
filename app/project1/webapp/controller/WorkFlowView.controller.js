@@ -15,19 +15,19 @@ sap.ui.define([
 
         return Controller.extend("project1.controller.WorkFlowView", {
             onInit: function () {
-                let newWorkFlowModel = new JSONModel({
+                let oNewWorkFlowModel = new JSONModel({
                     workflowName: "",
                     workflowDescription: ""
                 })
 
-                this.getView().setModel(newWorkFlowModel, "newWorkFlow")
+                this.getView().setModel(oNewWorkFlowModel, "oNewWorkFlow")
 
 
             },
             onNewWorkFlow: function () {
-                console.log('hello');
-                if (!this.pDialog) {
-                    this.pDialog = Fragment.load({
+                
+                if (!this.onNewWorkFlowDialog) {
+                    this.onNewWorkFlowDialog = Fragment.load({
                         id: this.getView().getId(),
                         name: "project1.fragments.addworkflow",
                         controller: this
@@ -36,41 +36,41 @@ sap.ui.define([
                         return oDialog;
                     }.bind(this));
                 }
-                this.pDialog.then((oDialog) => {
+                this.onNewWorkFlowDialog.then((oDialog) => {
                     oDialog.open()
                 });
             },
 
-            onCreate_workFlow: function () {
+            onCreateWorkFlow: function () {
 
-                let newWorkFlowData = this.getView().getModel('newWorkFlow').getData();
-                let that = this
-                if (newWorkFlowData.workflowName) {
+                let oNewWorkFlowData = this.getView().getModel('oNewWorkFlow').getData();
+                
+                if (oNewWorkFlowData.workflowName) {
 
-                    this.CRUD_OF_WorkFlowTemplete('POST', newWorkFlowData)
-                    this.onCancle_WorkFlow()
+                    this.crudOfWorkFlowTemplate('POST', oNewWorkFlowData)
+                    this.onCancleWorkFlow()
                     
 
                 } else {
-                    console.log("please provide some data");
+                    MessageBox.warning('please provide Work Flow Name')
 
                 }
 
             },
-            onCancle_WorkFlow: function () {
+            onCancelWorkFlow: function () {
                 this.byId('createWorkFlow').close()
             },
             handleDelete: function (oEvent) {
                 console.log(oEvent);
                 let oItem = oEvent.getParameters('listItem')
-                let title = oItem.listItem.mProperties.title
-                console.log(title)
+                let oTitle = oItem.listItem.mProperties.title
+                console.log(oTitle)
 
-                this.CRUD_OF_WorkFlowTemplete('DELETE', null, title)
+                this.crudOfWorkFlowTemplate('DELETE', null, oTitle)
 
             },
 
-            CRUD_OF_WorkFlowTemplete: function (method, data, title) {
+            crudOfWorkFlowTemplate: function (method, data, title) {
                 let that = this
 
                 switch (method) {
@@ -84,9 +84,9 @@ sap.ui.define([
                             success: function () {
                                 console.log('data posted');
 
-                                that.CRUD_OF_WorkFlowTemplete('GET')
+                                that.crudOfWorkFlowTemplate('GET')
 
-                                that.getView().getModel('newWorkFlow').setData({
+                                that.getView().getModel('oNewWorkFlow').setData({
                                     workflowName: "",
                                     workflowDescription: ""
                                 })
@@ -114,7 +114,7 @@ sap.ui.define([
                             success: function () {
                                 console.log('Data Deleted');
 
-                                that.CRUD_OF_WorkFlowTemplete('GET')
+                                that.crudOfWorkFlowTemplate('GET')
 
                                 that.onPageRefresh()
 

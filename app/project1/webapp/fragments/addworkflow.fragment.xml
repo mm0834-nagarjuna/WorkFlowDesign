@@ -7,22 +7,19 @@
       
       <VBox>
         <Label text="Work Flow Name"></Label>
-        <Input type="Text" value="{newWorkFlow>/workflowName}" ></Input>
+        <Input type="Text" value="{oNewWorkFlow>/workflowName}" ></Input>
 
         <Label text="Work Flow Small Description"></Label>
-        <Input type="Text" value="{newWorkFlow>/workflowDescription}" ></Input>
-
-         
-
+        <Input type="Text" value="{oNewWorkFlow>/workflowDescription}" ></Input>
 
       </VBox>
     
       <beginButton>
-         <Button text="Create" press="onCreate_workFlow" />
+         <Button text="Create" press="onCreateWorkFlow" />
       </beginButton>
       
       <endButton>
-         <Button text="Cancel" press="onCancle_WorkFlow" />
+         <Button text="Cancel" press="onCancelWorkFlow" />
       </endButton>
    </Dialog>
 </core:FragmentDefinition>

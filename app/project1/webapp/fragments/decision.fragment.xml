@@ -50,7 +50,7 @@
         <beginButton>
             <Button
                 text="Create"
-                press="onCreate_Decision"
+                press="onCreateDecision"
                 
             />
         </beginButton>
@@ -58,7 +58,7 @@
         <endButton>
             <Button
                 text="Cancel"
-                press="onCancle_Decision"
+                press="onCancleDecision"
             />
         </endButton>
     </Dialog>

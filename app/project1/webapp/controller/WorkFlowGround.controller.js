@@ -7,12 +7,13 @@ sap.ui.define([
     "sap/m/MessageBox",
     "sap/m/MessageToast",
 ], function (Controller, JSONModel, Button, Fragment, Label, MessageBox, MessageToast) {
-    let NodeKey, LineKey
+    let oNodeKey, LineKey
     return Controller.extend("project1.controller.WorkFlowGround", {
         _currentNode: '', workFlow_Title: '', WorkFlowName: '',
         onInit: function () {
 
             let workflowdesignModel = new JSONModel()
+
             let NodeModel = new JSONModel({
                 "nodeKey": "",
                 "nodeTitle": "",
@@ -49,7 +50,7 @@ sap.ui.define([
         _onObjectMatched: function (oEvent) {
             this.WorkFlowName = oEvent.getParameter('arguments').workflowName;
 
-            this.Fetch_Work_Flow_Ground()
+            this.fetchWorkFlowGround()
 
             this.createToolbar()
 
@@ -85,14 +86,13 @@ sap.ui.define([
 
         },
 
-        navBack: function (oEvent) {
+        navBack: function () {
             let oRouter = this.getOwnerComponent().getRouter();
             oRouter.navTo("RouteWorkFlowView");
         },
 
 
-        Fetch_Work_Flow_Ground: function () {
-
+        fetchWorkFlowGround: function () {
 
             let WorkFlowName = this.WorkFlowName
 
@@ -106,7 +106,6 @@ sap.ui.define([
 
                     that.getView().getModel().setData(data)
 
-
                     let workflow_Name = that.getView().getModel().getData().workflowName
                     this.WorkFlowName = workflow_Name
 
@@ -118,7 +117,7 @@ sap.ui.define([
 
                 },
                 error: function (error) {
-                    console.log(error);
+                    //error message
                     MessageBox.error(error.responseJSON.error.message)
                 }
             })
@@ -145,31 +144,31 @@ sap.ui.define([
 
         },
 
-        onCreate_Node: function () {
+        onCreateNode: function () {
 
             let NodeData = this.getView().getModel('createNodeModel').getData()
 
 
             if (NodeData.nodeTitle) {
-                this.CRUD_Of_Node('POST', null, NodeData)
+                this.CRUDOfNode('POST', null, NodeData)
             } else {
                 MessageBox.warning('Please Provide Node Title')
             }
 
-            this.onCancle_Node()
+            this.onCancleNode()
         },
 
-        onCancle_Node: function () {
+        onCancleNode: function () {
             this.byId('createNode').close()
         },
 
 
-        onAdd_Node_Btn: function () {
+        onAddNodeBtn: function () {
             this.addNode()
         },
 
 
-        onEdit_Node_Btn: function (oEvent) {
+        onEditNodeBtn: function (oEvent) {
 
             if (!this.editNodeDialog) {
                 this.editNodeDialog = Fragment.load({
@@ -185,37 +184,37 @@ sap.ui.define([
                 oEditDialog.open()
                 console.log(this.editNodeDialog);
             });
-            let Node_Key = oEvent.getSource().getParent().getKey()
+            let NodeKey = oEvent.getSource().getParent().getKey()
 
 
-            this.CRUD_Of_Node("GET", Node_Key, null)
-            NodeKey = Node_Key
+            this.CRUDOfNode("GET", NodeKey, null)
+            oNodeKey = NodeKey
 
 
         },
-        onEdit_Node: function () {
+        onEditNode: function () {
 
 
-            let Edited_Data = this.getView().getModel('editNodeModel').getData()
+            let EditedData = this.getView().getModel('editNodeModel').getData()
 
-            if (Edited_Data.nodeTitle) {
-                this.CRUD_Of_Node("PATCH", NodeKey, Edited_Data)
+            if (EditedData.nodeTitle) {
+                this.CRUDOfNode("PATCH", oNodeKey, EditedData)
             }
             else {
                 MessageBox.warning('Please Provide Node Title')
             }
-            this.onEditCancle_Node()
+            this.onEditCancleNode()
 
         },
-        onEditCancle_Node: function () {
+        onEditCancleNode: function () {
             this.byId('editNode').close()
         },
 
 
 
-        onDelete_Node_Btn: function (oEvent) {
-            let Node_Key = oEvent.getSource().getParent().getKey()
-            console.log(Node_Key);
+        onDeleteNodeBtn: function (oEvent) {
+            let NodeKey = oEvent.getSource().getParent().getKey()
+            console.log(NodeKey);
 
             let childLines = oEvent.getSource().getParent().getChildLines();
             let parentLines = oEvent.getSource().getParent().getParentLines()
@@ -225,7 +224,7 @@ sap.ui.define([
 
                 let lineKey = line.getTitle()
                 console.log(lineKey);
-                this.CRUD_OF_LINE('DELETE', null, lineKey)
+                this.crudOfLine('DELETE', null, lineKey)
                 console.log('this line deleted' + line.getTitle());
             })
 
@@ -233,13 +232,13 @@ sap.ui.define([
 
                 let lineKey = line.getTitle()
                 console.log(lineKey);
-                this.CRUD_OF_LINE('DELETE', null, lineKey)
+                this.crudOfLine('DELETE', null, lineKey)
                 console.log('this line deleted' + line.getTitle());
             })
 
 
-            if (Node_Key) {
-                this.CRUD_Of_Node('DELETE', Node_Key, null)
+            if (NodeKey) {
+                this.CRUDOfNode('DELETE', NodeKey, null)
             } else {
                 MessageBox.warning('Please Provide Node Key')
             }
@@ -247,7 +246,7 @@ sap.ui.define([
 
 
 
-        onCreate_Line_fragment: function (oEvent) {
+        onCreateLinefragment: function (oEvent) {
 
             if (!this.LineDialog) {
                 this.LineDialog = Fragment.load({
@@ -263,9 +262,9 @@ sap.ui.define([
                 oDialog.open()
             });
 
-            let Node_Key = oEvent.getSource().getParent().getKey()
+            let NodeKey = oEvent.getSource().getParent().getKey()
 
-            this.getView().getModel('createLineModel').setProperty('/fromNodeKey', Node_Key)
+            this.getView().getModel('createLineModel').setProperty('/fromNodeKey', NodeKey)
 
             this.getView().getModel('createLineModel').setProperty('/lineKey', `${this.generateUUID()}`)
         },
@@ -275,15 +274,15 @@ sap.ui.define([
 
 
 
-        on_NodeHelpTo: function () {
-            this.on_NodeHelp('toNode');
+        onNodeHelpTo: function () {
+            this.onNodeHelp('toNode');
         },
 
-        on_NodeHelp: function (sCurrentNOde) {
+        onNodeHelp: function (sCurrentNOde) {
 
             this._currentNode = sCurrentNOde;
-            if (!this.on_NodeHelpDialog) {
-                this.on_NodeHelpDialog = Fragment.load({
+            if (!this.onNodeHelpDialog) {
+                this.onNodeHelpDialog = Fragment.load({
                     id: this.getView().getId(),
                     name: "project1.fragments.nodehelpValue",
                     controller: this
@@ -292,7 +291,7 @@ sap.ui.define([
                     return oDialog;
                 }.bind(this));
             }
-            this.on_NodeHelpDialog.then((oDialog) => {
+            this.onNodeHelpDialog.then((oDialog) => {
                 oDialog.open()
             });
         },
@@ -306,20 +305,20 @@ sap.ui.define([
 
 
 
-        onCreate_Line: function () {
+        onCreateLine: function () {
             let Line_Data = this.getView().getModel('editLineModel').getData();
 
             if (Line_Data.toNodeKey) {
-                this.CRUD_OF_LINE('POST', Line_Data, null)
+                this.crudOfLine('POST', Line_Data, null)
             } else {
                 MessageBox.warning('Please Provide Target Node')
             }
 
-            this.onCancle_Line()
+            this.onCancleLine()
         },
 
 
-        onCancle_Line: function () {
+        onCancleLine: function () {
             this.byId('createLine').close()
         },
 
@@ -337,13 +336,13 @@ sap.ui.define([
 
         },
 
-        onDelete_Line_Btn: function (oEvent) {
+        onDeleteLineBtn: function (oEvent) {
             LineKey = oEvent.getSource().getParent().getTitle();
             console.log(LineKey);
 
 
             if (LineKey) {
-                this.CRUD_OF_LINE('DELETE', null, LineKey)
+                this.crudOfLine('DELETE', null, LineKey)
             } else {
                 MessageBox.warning('Please Select Line Key')
             }
@@ -351,10 +350,10 @@ sap.ui.define([
         },
 
 
-        onDecision_Node_Btn: function (oEvent) {
-            let Node_Key = oEvent.getSource().getParent().getKey()
+        onDecisionNodeBtn: function (oEvent) {
+            let NodeKey = oEvent.getSource().getParent().getKey()
 
-            this.getView().getModel('createDecisionModel').setProperty('/from_NodeKey', Node_Key)
+            this.getView().getModel('createDecisionModel').setProperty('/from_NodeKey', NodeKey)
 
             let nodes = this.byId('graph').getNodes()
             let nodesArray = []
@@ -394,7 +393,7 @@ sap.ui.define([
             });
         },
 
-        onCreate_Decision: function () {
+        onCreateDecision: function () {
             let decisionData = this.getView().getModel('createDecisionModel').getData();
             let that = this;
 
@@ -419,48 +418,47 @@ sap.ui.define([
             };
 
 
+      if(decisionData.from_NodeKey && decisionNode.nodeKey && nodeConnectorLine.toNodeKey && decisionConnectorLine.fromNodeKey && decisionNode.nodeTitle ){
+        $.ajax({
+            url: this.getOwnerComponent().getModel('workflowdesign').getServiceUrl() + 'Decision',
+            method: "POST",
+            contentType: 'application/json',
+            data: JSON.stringify(decisionData),
+            success: function () {
+                that.CRUDOfNode('POST', null, decisionNode)
+                that.crudOfLine("POST", decisionConnectorLine, null)
+                that.crudOfLine("POST", nodeConnectorLine, null)
+                MessageToast.show('Decision Created')
 
-            console.log('Decision Data ->', decisionData);
-            console.log('New Decision Node ->', decisionNode);
-            console.log('New Line ->', decisionConnectorLine);
-            console.log('New dec to node  Line ->', nodeConnectorLine);
+                that.getView().getModel('createDecisionModel').setData({
+                    "from_NodeKey": "",
+                    "Decision": "",
+                    "to_NodeKey": ""
+                })
+            },
+            error: function (Error) {
+                MessageBox.error(Error.responseJSON.error.message)
+            }
+        })
+      } else {
+        MessageBox.warning('please provide Valid Data')
+      }
 
 
-
-            $.ajax({
-                url: this.getOwnerComponent().getModel('workflowdesign').getServiceUrl() + 'Decision',
-                method: "POST",
-                contentType: 'application/json',
-                data: JSON.stringify(decisionData),
-                success: function () {
-                    that.CRUD_Of_Node('POST', null, decisionNode)
-                    that.CRUD_OF_LINE("POST", decisionConnectorLine, null)
-                    that.CRUD_OF_LINE("POST", nodeConnectorLine, null)
-                    MessageToast.show('Decision Created')
-
-                    that.getView().getModel('createDecisionModel').setData({
-                        "from_NodeKey": "",
-                        "Decision": "",
-                        "to_NodeKey": ""
-                    })
-                },
-                error: function (Error) {
-                    MessageBox.error(Error.responseJSON.error.message)
-                }
-            })
-            this.onCancle_Decision();
+           
+            this.onCancleDecision();
         },
-        onCancle_Decision: function () {
+        onCancleDecision: function () {
             this.byId('createDecision').close();
         },
 
 
-        CRUD_Of_Node: function (method, Node_Key, data) {
+        CRUDOfNode: function (method, NodeKey, data) {
             switch (method) {
                 case "GET": {
                     let that = this
                     $.ajax({
-                        url: `${this.getOwnerComponent().getModel('workflowdesign').getServiceUrl()}Nodes('${Node_Key}')`,
+                        url: `${this.getOwnerComponent().getModel('workflowdesign').getServiceUrl()}Nodes('${NodeKey}')`,
                         method: "GET",
                         success: function (data) {
 
@@ -494,7 +492,7 @@ sap.ui.define([
                                 "workFlowNameNode": ""
                             })
 
-                            that.Fetch_Work_Flow_Ground()
+                            that.fetchWorkFlowGround()
 
                         },
                         error: function (error) {
@@ -513,7 +511,7 @@ sap.ui.define([
                     console.log('PATCH');
                     let that = this
                     $.ajax({
-                        url: `${this.getOwnerComponent().getModel('workflowdesign').getServiceUrl()}Nodes('${Node_Key}')`,
+                        url: `${this.getOwnerComponent().getModel('workflowdesign').getServiceUrl()}Nodes('${NodeKey}')`,
                         method: "PATCH",
                         contentType: 'application/json',
                         data: JSON.stringify(data),
@@ -529,7 +527,7 @@ sap.ui.define([
                                 "workFlowNameNode": ""
                             })
 
-                            that.Fetch_Work_Flow_Ground()
+                            that.fetchWorkFlowGround()
 
                         },
                         error: function (error) {
@@ -543,13 +541,13 @@ sap.ui.define([
                     console.log('Delete');
                     let that = this
                     $.ajax({
-                        url: `${this.getOwnerComponent().getModel('workflowdesign').getServiceUrl()}Nodes('${Node_Key}')`,
+                        url: `${this.getOwnerComponent().getModel('workflowdesign').getServiceUrl()}Nodes('${NodeKey}')`,
                         method: "DELETE",
                         success: function () {
 
                             MessageToast.show('Node deleted From Work Flow')
 
-                            that.Fetch_Work_Flow_Ground()
+                            that.fetchWorkFlowGround()
 
                         },
                         error: function (error) {
@@ -570,7 +568,7 @@ sap.ui.define([
 
 
 
-        CRUD_OF_LINE: function (method, data, lineKey) {
+        crudOfLine: function (method, data, lineKey) {
             switch (method) {
                 case "GET": {
                     console.log('GET Method For Lines');
@@ -587,7 +585,7 @@ sap.ui.define([
 
                             MessageToast.show('Line Created')
 
-                            that.Fetch_Work_Flow_Ground()
+                            that.fetchWorkFlowGround()
 
 
                             that.getView().getModel('editLineModel').setData({
@@ -615,7 +613,7 @@ sap.ui.define([
                             console.log('Line deleted From Work Flow');
                             MessageToast.show('Line Deleted')
 
-                            that.Fetch_Work_Flow_Ground()
+                            that.fetchWorkFlowGround()
 
                         },
                         error: function (error) {

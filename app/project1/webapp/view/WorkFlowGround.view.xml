@@ -22,27 +22,27 @@
                     <ActionButton
                         icon="sap-icon://chain-link"
                         title="Create Line"
-                        press="onCreate_Line_fragment"
+                        press="onCreateLinefragment"
                     />
                     <ActionButton
                         icon="sap-icon://decision"
                         title=" Take Decision"
-                        press="onDecision_Node_Btn"
+                        press="onDecisionNodeBtn"
                     />
                     <ActionButton
                         icon="sap-icon://add"
                         title="Add Node"
-                        press="onAdd_Node_Btn"
+                        press="onAddNodeBtn"
                     />
                     <ActionButton
                         icon="sap-icon://edit"
                         title="Edit Node"
-                        press="onEdit_Node_Btn"
+                        press="onEditNodeBtn"
                     />
                     <ActionButton
                         icon="sap-icon://delete"
                         title="Delete Node"
-                        press="onDelete_Node_Btn"
+                        press="onDeleteNodeBtn"
                     />
                 </actionButtons>
             </Node>
@@ -60,7 +60,7 @@
                     <ActionButton
                         icon="sap-icon://delete"
                         title="Delete Line"
-                        press="onDelete_Line_Btn"
+                        press="onDeleteLineBtn"
                     />
                 </actionButtons>
             </Line>

@@ -32,14 +32,14 @@
         <beginButton>
             <Button
                 text="Create"
-                press="onCreate_Node"
+                press="onCreateNode"
             />
         </beginButton>
 
         <endButton>
             <Button
                 text="Cancel"
-                press="onCancle_Node"
+                press="onCancleNode"
             />
         </endButton>
     </Dialog>

@@ -30,7 +30,7 @@
                 type="Text"
                 value="{createLineModel>/toNodeKey}"
                 showValueHelp="true"
-                valueHelpRequest="on_NodeHelpTo"
+                valueHelpRequest="onNodeHelpTo"
             />
 
             <Label text="Work FLow Name" />
@@ -44,14 +44,14 @@
         <beginButton>
             <Button
                 text="Create Line"
-                press="onCreate_Line"
+                press="onCreateLine"
             />
         </beginButton>
 
         <endButton>
             <Button
                 text="Cancel Line"
-                press="onCancle_Line"
+                press="onCancleLine"
             />
         </endButton>
     </Dialog>

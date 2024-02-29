@@ -59,9 +59,6 @@ sap.ui.define([
 
         },
 
-
-
-
         createToolbar: function () {
             let WorkFlowName = this._WorkFlowName
             var oGraph = this.byId("graph");

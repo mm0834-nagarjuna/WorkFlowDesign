@@ -3,7 +3,7 @@ namespace my.workflow;
 entity WorkflowTemplete {
   key workflowName        : String(20);
       workflowDescription : String(30);
-      author              : String @cds.on.insert: $user;  // Persistence {@cds.on.insert}
+      createdBy           : String @cds.on.insert: $user; // Persistence {@cds.on.insert}
       Nodes               : Composition of many Nodes
                               on Nodes.workFlowNameNode = $self.workflowName;
       Lines               : Composition of many Lines

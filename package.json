@@ -31,16 +31,13 @@
                 "strategy": "mocked",
                 "users": {
                   "nagarjuna": {
-                    "password": "12345",
-                    "roles": ["dev","admin"]
+                    "password": "12345"
                   },
                   "arjun": {
-                    "password": "12345",
-                    "roles": ["dev"]
+                    "password": "12345"
                   },
                   "kishore":{
-                    "password": "12345",
-                    "roles":["view"]
+                    "password": "12345"
                   }   
                 }
               }           

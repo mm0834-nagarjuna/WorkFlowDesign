@@ -18,15 +18,14 @@ sap.ui.define([
                 let oNewWorkFlowModel = new JSONModel({
                     workflowName: "",
                     workflowDescription: "",
-                   
+
                 })
 
                 this.getView().setModel(oNewWorkFlowModel, "oNewWorkFlow")
-
-
             },
+
             onNewWorkFlow: function () {
-                
+
                 if (!this.onNewWorkFlowDialog) {
                     this.onNewWorkFlowDialog = Fragment.load({
                         id: this.getView().getId(),
@@ -45,12 +44,12 @@ sap.ui.define([
             onCreateWorkFlow: function () {
 
                 let oNewWorkFlowData = this.getView().getModel('oNewWorkFlow').getData();
-                
+
                 if (oNewWorkFlowData.workflowName) {
 
                     this.crudOfWorkFlowTemplate('POST', oNewWorkFlowData)
                     this.onCancelWorkFlow()
-                    
+
 
                 } else {
                     MessageBox.warning('please provide Work Flow Name')
@@ -62,10 +61,10 @@ sap.ui.define([
                 this.byId('createWorkFlow').close()
             },
             handleDelete: function (oEvent) {
-                console.log(oEvent);
+
                 let oItem = oEvent.getParameters('listItem')
                 let oTitle = oItem.listItem.mProperties.title
-                console.log(oTitle)
+
 
                 this.crudOfWorkFlowTemplate('DELETE', null, oTitle)
 
@@ -76,14 +75,14 @@ sap.ui.define([
 
                 switch (method) {
                     case "POST": {
-                        console.log('POST');
+
                         $.ajax({
                             url: this.getOwnerComponent().getModel('workflowdesign').getServiceUrl() + 'WorkflowTemplete',
                             method: "POST",
                             contentType: 'application/json',
                             data: JSON.stringify(data),
                             success: function () {
-                                console.log('data posted');
+
 
                                 that.crudOfWorkFlowTemplate('GET')
 
@@ -101,19 +100,18 @@ sap.ui.define([
                             }
 
                         })
+
                         break;
                     }
-                    case "PATCH": {
-                        console.log('PATCH');
-                        break;
-                    } case "DELETE": {
-                        console.log('DELETE');
+
+                    case "DELETE": {
+
 
                         $.ajax({
                             url: `${this.getOwnerComponent().getModel('workflowdesign').getServiceUrl()}${'WorkflowTemplete'}('${title}')`,
                             method: "DELETE",
                             success: function () {
-                                console.log('Data Deleted');
+
 
                                 that.crudOfWorkFlowTemplate('GET')
 
@@ -129,16 +127,15 @@ sap.ui.define([
                         break;
                     }
                     default: {
-                        console.log('default') 
-                        break;
+                        console.log('default')
+
                     }
                 }
             },
             onSelect: function (oEvent) {
-                let workFlowName = oEvent.getSource().getTitle()
-                console.log(workFlowName);
+                let oworkFlowName = oEvent.getSource().getTitle()
                 const oRouter = this.getOwnerComponent().getRouter();
-                oRouter.navTo("WorkFlowGround", { workflowName: workFlowName });
+                oRouter.navTo("WorkFlowGround", { workflowName: oworkFlowName });
             },
             onSearchWorkFlow: function (oEvent) {
                 const aFilter = [];
@@ -156,7 +153,7 @@ sap.ui.define([
                 oBinding.filter(aFilter);
 
             },
-            onPageRefresh:function(){
+            onPageRefresh: function () {
                 let oBind = this.byId('WorkFlowList').getBinding('items')
                 oBind.refresh()
                 MessageToast.show('Data Refreshed')

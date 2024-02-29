@@ -102,8 +102,6 @@ sap.ui.define([
 
                     that.getView().getModel().setData(data)
 
-
-
                     that.getView().getModel('createNodeModel').setProperty("/workFlowNameNode", WorkFlowName);
 
                     that.getView().getModel('createNodeModel').setProperty('/nodeKey', `${that.generateUUID()}`)
@@ -367,7 +365,6 @@ sap.ui.define([
                         additionalText: "{nodeTitle}"
                     })
                 });
-
 
                 oDialog.open()
             });

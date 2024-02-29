@@ -8,16 +8,17 @@ sap.ui.define([
     "sap/m/MessageToast",
 ],
     /**
-     * @param {typeof sap.ui.core.mvc.Controller} Controller
+     * @param {typeof sap.ui.core.mvc.Controller} Controller 
      */
-    function (Controller, JSONModel, Fragment, Filter, FilterOperator, MessageBox,MessageToast) {
+    function (Controller, JSONModel, Fragment, Filter, FilterOperator, MessageBox, MessageToast) {
         "use strict";
 
         return Controller.extend("project1.controller.WorkFlowView", {
             onInit: function () {
                 let oNewWorkFlowModel = new JSONModel({
                     workflowName: "",
-                    workflowDescription: ""
+                    workflowDescription: "",
+                   
                 })
 
                 this.getView().setModel(oNewWorkFlowModel, "oNewWorkFlow")
@@ -48,7 +49,7 @@ sap.ui.define([
                 if (oNewWorkFlowData.workflowName) {
 
                     this.crudOfWorkFlowTemplate('POST', oNewWorkFlowData)
-                    this.onCancleWorkFlow()
+                    this.onCancelWorkFlow()
                     
 
                 } else {

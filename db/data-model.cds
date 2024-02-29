@@ -3,6 +3,7 @@ namespace my.workflow;
 entity WorkflowTemplete {
   key workflowName        : String(20);
       workflowDescription : String(30);
+      author              : String @cds.on.insert: $user;  // Persistence {@cds.on.insert}
       Nodes               : Composition of many Nodes
                               on Nodes.workFlowNameNode = $self.workflowName;
       Lines               : Composition of many Lines
@@ -14,11 +15,12 @@ entity Nodes {
       workFlowNameNode : String(15);
       nodeTitle        : String(10);
       nodeDescription  : String(20);
- 
+
 
       workflowName     : Association to WorkflowTemplete
                            on workflowName.workflowName = $self.workFlowNameNode;
-      Decision            : Composition of many Decision on Decision.Decision= $self.nodeTitle;
+      Decision         : Composition of many Decision
+                           on Decision.Decision = $self.nodeTitle;
 }
 
 entity Lines {
@@ -32,11 +34,11 @@ entity Lines {
 }
 
 entity Decision {
-  key from_NodeKey  : String(10);
-  key Decision : String enum {
+  key from_NodeKey : String(10);
+  key Decision     : String enum {
         Accept;
         Reject;
         Revert
       };
-      to_NodeKey  : String(10);
+      to_NodeKey   : String(10);
 }

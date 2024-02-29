@@ -26,7 +26,24 @@
     },
     "cds": {
         "requires": {
-            "db": "hana"
+            "db": "hana",
+            "auth": {
+                "strategy": "mocked",
+                "users": {
+                  "nagarjuna": {
+                    "password": "12345",
+                    "roles": ["dev","admin"]
+                  },
+                  "arjun": {
+                    "password": "12345",
+                    "roles": ["dev"]
+                  },
+                  "kishore":{
+                    "password": "12345",
+                    "roles":["view"]
+                  }   
+                }
+              }           
         }
     }
 }
